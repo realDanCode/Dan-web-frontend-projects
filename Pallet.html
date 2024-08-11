@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>COLOR PALLET MAKER</title>
+<style type="text/css">
+body{
+color: #1b2e29;
+background: #ebebeb;
+}
+.header {
+position: fixed;
 
+}
+h4{
+color: #375263;
+}
+.main_page {
+padding: 7px 8px;
+position: ;
+margin-top: 80px;
+display: flex;
+align-items: center;
+justify-content: centre;
+flex-direction: row;
+letter-spacing: 5px;
+}
+.eachTable{
+
+input{
+padding: 6px 8px;
+width: 120px;
+}
+.main_page div{
+ height: 340px;
+ border-radius: 2px ;
+ font-size: 14px;
+ font-weight: 800;
+ font-family:fantasy;
+ color: white;
+ display: flex;
+ text-align: center;
+ padding: 10px 6px;
+    }
+
+#colorMaker{
+border-top: 3px solid grey;
+}
+.inp{
+width: 120px;
+padding: 6px 8px;
+}
+</style>
+</head>
+<body>
+
+     <div class="starter">
+       <h4>Get started by setting number of colors you want to use (Max of 5)</h4>
+        <input type="number" class="inp" placeholder="Range(2-5)"/>
+        <button disabled class="inp">START</button>
+     </div>
+     
+   <div class="main_page">
+
+   </div>
+   
+   <div id="colorMaker">
+   <h5>Input color Name/hexadecimal code. or Use selector to select
+   color values</h5>
+     <input type="text" class="inp" placeholder="Enter Color Name/Hex value"/>
+     <button  class="inp">SET COLOR</button>
+     
+     <input id="color" class="inp"type="color"/>
+   </div>
+   
+   <script type="text/javascript">
+   let starter = document.querySelector(".starter")
+      let first; colorParent1 = document.querySelector(".main_page")
+      let colorParent = document.querySelector(".main_page").children
+      let colorSelector = document.getElementById("colorMaker")
+      let colorBtn  = colorSelector.children[2]
+      first = 0; let noOfColors;
+      
+  starter.children[1].addEventListener("keyup", () =>{
+         let number = parseInt(event.target.value)
+         if(number >1 && number<6){
+              starter.children[2].disabled = false        
+                      } else {
+              starter.children[2].disabled = true        
+                      }
+               })
+               
+ starter.children[2].addEventListener("click", () =>{
+        let number = parseInt(starter.children[1].value)
+         for(let n=0;n<number;n++){
+         let div = document.createElement("div")
+         div.id = n
+         div.style.width = Math.floor(100/number) + "%"
+         colorParent1.appendChild(div);
+         div.onclick = setIndex
+                   }
+          event.target.disabled = true
+          starter.children[1].disabled = true
+             })
+     
+     function setIndex(){
+            let theColor = event.target 
+            let id = parseInt(theColor.id)
+            first = id;
+           colorSelector.children[1].value = event.target.textContent
+           colorSelector.children[2].value   = event.target.textContent
+                 }
+     colorBtn.addEventListener("click", () => {
+           let colors = colorSelector.children[1].value
+           noOfColors = colorParent.length
+           if(first < (noOfColors-1)){
+                  colorParent[first].style.backgroundColor = colors
+                  first++   
+                     } else {
+                  colorParent[first].style.backgroundColor  = colors 
+                  first = 0
+                      }
+             colors.value = ""
+              })
+   
+   
+    document.getElementById("color").addEventListener("change", 
+    () => {
+       noOfColors = colorParent.length
+       let currentColor = event.target.value
+       colorParent[first].innerText = currentColor
+       if(first < (noOfColors-1)){
+       colorParent[first].style.backgroundColor = currentColor
+       first++   
+       } else {
+       colorParent[first].style.backgroundColor  = currentColor 
+       first = 0
+       }   
+         
+            })
+   </script>
+</body>
+  </html>
